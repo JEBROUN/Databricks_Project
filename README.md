@@ -11,6 +11,7 @@ Previewing data with SELECT * LIMIT 20
 
 # SQL analysis
 
+
 Inspecting schema and metadata (DESCRIBE, DESCRIBE DETAIL)
 Checking tables in the metastore (SHOW TABLES)
 
