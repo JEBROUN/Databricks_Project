@@ -1,35 +1,52 @@
-## Data Car Project
-# Overview
+# Azure Databricks Streaming Pipeline : Auto Loader & Key Vault
+Ce projet démontre la mise en place d'un pipeline d'ingestion de données en streaming (architecture Medallion - Couche Bronze) utilisant Databricks Auto Loader et sécurisé par Azure Key Vault.
 
-This project demonstrates basic data exploration, SQL analysis, dataset filtering, and a simple streaming pipeline using Databricks and Spark. The notebook Data_Car.ipynb works with the table car_price_data stored in the Databricks warehouse.
+#  Architecture du Projet
+- Le pipeline suit les meilleures pratiques de l'ingénierie de données moderne sur Azure :
 
-# Data exploration
+- Source : Fichiers CSV déposés dans un conteneur Azure Data Lake Storage (ADLS Gen2).
 
-Listing DBFS directories
-Checking the presence of the car_price_data table
-Previewing data with SELECT * LIMIT 20
+- Ingestion : Utilisation de Databricks Auto Loader (cloudFiles) pour une détection incrémentale et efficace des nouveaux fichiers.
 
-# SQL analysis
+- Sécurité : Authentification via un Secret Scope lié à Azure Key Vault (Zero Clear-Text Credentials).
+
+- Destination : Stockage au format Delta Lake (Table Bronze) avec gestion des Checkpoints pour garantir la tolérance aux pannes.
+
+#  Stack Technique
+- Cloud : Microsoft Azure
+
+- Plateforme : Azure Databricks
+
+- Langage : PySpark
+
+- Stockage : ADLS Gen2 & Delta Lake
+
+- Sécurité : Azure Key Vault & RBAC (Role-Based Access Control)
+
+- Orchestration : Structured Streaming & Checkpointing
+
+#  Configuration de la Sécurité (Point Fort)
+Une attention particulière a été portée à la cybersécurité :
+
+- Création d'un Azure Key Vault pour stocker les clés d'accès au stockage.
+
+- Configuration d'un Secret Scope dans Databricks.
+
+- Attribution du rôle Key Vault Secrets User à l'identité système AzureDatabricks pour permettre une lecture sécurisée sans exposer les clés dans le code.
 
 
-Inspecting schema and metadata (DESCRIBE, DESCRIBE DETAIL)
-Checking tables in the metastore (SHOW TABLES)
+# Fonctionnalités Clés
+Auto Loader : Gestion automatique de l'évolution du schéma et détection des fichiers sans lister tout le répertoire (optimisation des coûts/performances).
 
-# Filtered dataset
+Auditability : Ajout systématique d'une colonne ingested_at pour la traçabilité des données.
 
-Creation of a derived table containing only Ford vehicles:
+Résilience : Utilisation de Checkpoints permettant de reprendre le flux exactement là où il s'est arrêté en cas d'interruption.
 
-CREATE TABLE Car_Price_Data_Ford AS
-SELECT * FROM car_price_data WHERE Brand = 'Ford';
+# Comment l'utiliser ?
+- Configurer les Widgets Databricks avec vos paramètres Azure (Storage Account, Container, Scope Name).
 
-# Streaming pipeline
+- Déposer vos fichiers CSV dans le dossier /input/ de votre conteneur.
 
-Reading Car_Price_Data_Ford as a streaming source
-Creating a temporary view for real-time processing
+- Lancer le notebook. Le dashboard de streaming affichera les pics d'ingestion en temps réel.
 
-# Purpose
-
-Provide a simple example of:
-Navigating DBFS
-Querying and transforming data with SQL
-Building an introductory Spark streaming flow
+spark_streaming.png
