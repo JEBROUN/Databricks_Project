@@ -1,5 +1,8 @@
 # Azure Databricks Streaming Pipeline : Auto Loader & Key Vault
+
 Ce projet démontre la mise en place d'un pipeline d'ingestion de données en streaming (architecture Medallion - Couche Bronze) utilisant Databricks Auto Loader et sécurisé par Azure Key Vault.
+
+![Spark Streaming Dashboard](spark_streaming.png)
 
 #  Architecture du Projet
 - Le pipeline suit les meilleures pratiques de l'ingénierie de données moderne sur Azure :
@@ -49,4 +52,4 @@ Résilience : Utilisation de Checkpoints permettant de reprendre le flux exactem
 
 - Lancer le notebook. Le dashboard de streaming affichera les pics d'ingestion en temps réel.
 
-![Spark Streaming Dashboard](spark_streaming.png)
+
