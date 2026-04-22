@@ -49,4 +49,4 @@ Résilience : Utilisation de Checkpoints permettant de reprendre le flux exactem
 
 - Lancer le notebook. Le dashboard de streaming affichera les pics d'ingestion en temps réel.
 
-spark_streaming.png
+./spark_streaming.png
